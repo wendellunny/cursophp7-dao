@@ -92,6 +92,15 @@
             ));
         }
 
+        public function delete(){
+            $sql = new Sql();
+            $sql -> query("DELETE FROM aluno WHERE id=:ID",array(
+                ":ID"=>$this->getId()
+            )); 
+            $this->setId(0);   
+            $this->setNomeAluno("");
+            $this->setSerie(""); 
+        }
         public function __construct($aluno ="", $serie=""){
             $this -> setNomeAluno($aluno);
             $this -> setSerie($serie);

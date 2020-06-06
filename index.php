@@ -38,8 +38,16 @@
 
     //Editar no Banco
 
-     $aluno = new Aluno();
-     $aluno ->loadById(20);
-     $aluno->update("Matheus",9);
+    //  $aluno = new Aluno();
+    //  $aluno ->loadById(20);
+    //  $aluno->update("Matheus",9);
+
+    //Deletar Usuario
+
+    $aluno = new Aluno();
+    $aluno -> loadById(9);
+    $aluno -> delete();
+
+    echo $aluno;
 
 ?>
