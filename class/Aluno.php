@@ -38,6 +38,36 @@
         
         }
 
+        public static function getList(){
+            $sql = new Sql();
+            return $sql->select("SELECT * FROM aluno ORDER BY nomealuno");
+        }
+
+        public static function search($nome){
+            $sql = new Sql();
+            return $sql->select("SELECT * FROM aluno WHERE nomealuno LIKE :NOME ORDER BY nomealuno",array(
+                ":NOME" => "%".$nome."%"
+            ));
+        }
+
+        public function login ($login,$password){
+            $sql = new Sql();
+            $results = $sql->select("SELECT * FROM aluno WHERE nomealuno=:NOME AND serie=:SERIE",array(
+                ":NOME"=>$login,
+                ":SERIE" => $password
+            ));
+            if (isset($results[0])){
+                $row = $results[0];
+                $this->setId($row['id']);
+                $this->setNomeAluno($row['nomealuno']);
+                $this->setSerie($row['serie']);
+            }else {
+                throw new Exception("Login ou/e Senha Invalidos");
+                
+            }
+        }
+
+
         public function __toString(){
             return json_encode(array(
                 "id"=>$this->getId(),
@@ -48,6 +78,9 @@
 
 
     }
+
+
+
 
 
 
