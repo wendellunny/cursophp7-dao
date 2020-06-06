@@ -30,10 +30,7 @@
             $sql = new Sql();
             $results = $sql->select("SELECT * FROM aluno WHERE id=:ID",array(":ID"=>$id));
             if (isset($results[0])){
-                $row = $results[0];
-                $this->setId($row['id']);
-                $this->setNomeAluno($row['nomealuno']);
-                $this->setSerie($row['serie']);
+                $this->setData($results[0]);
             }
         
         }
@@ -57,14 +54,47 @@
                 ":SERIE" => $password
             ));
             if (isset($results[0])){
-                $row = $results[0];
-                $this->setId($row['id']);
-                $this->setNomeAluno($row['nomealuno']);
-                $this->setSerie($row['serie']);
+                $this->setData($results[0]);
             }else {
                 throw new Exception("Login ou/e Senha Invalidos");
                 
             }
+        }
+        public function setData($data){
+            $this->setId($data['id']);
+            $this->setNomeAluno($data['nomealuno']);
+            $this->setSerie($data['serie']);
+
+        }
+
+        public function insert(){
+            $sql = new Sql();
+            $results = $sql->select("CALL sp_aluno_insert(:NOME,:SERIE)",array(
+                ":NOME"=>$this->getNomeAluno(),
+                ":SERIE"=>$this->getSerie()
+            ));
+            if (count($results)>0){
+                $this->setData($results[0]);
+            }
+
+        }
+
+        public function update($nome,$serie){
+            $sql = new Sql();
+            $this->setNomeAluno($nome);
+            $this->setSerie($serie);
+
+            $sql -> query("UPDATE aluno SET nomealuno = :NOME, serie = :SERIE WHERE id=:ID", 
+            array(
+                ":NOME"=>$this->getNomeAluno(),
+                ":SERIE"=>$this->getSerie(),
+                ":ID"=>$this->getId()
+            ));
+        }
+
+        public function __construct($aluno ="", $serie=""){
+            $this -> setNomeAluno($aluno);
+            $this -> setSerie($serie);
         }
 
 

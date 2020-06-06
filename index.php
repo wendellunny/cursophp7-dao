@@ -23,9 +23,23 @@
     // echo json_encode ($search);
 
 
-    // carrega Aluno com  Autenticação de login e senha
-    $aluno = new Aluno();
-    $aluno -> login("Maria",1);
-    echo $aluno;
+    // // carrega Aluno com  Autenticação de login e senha
+    // $aluno = new Aluno();
+    // $aluno -> login("Maria",1);
+    // echo $aluno;
+
+    //Inserir no Banco
+
+    // $aluno = new Aluno("Aline",2);
+    
+
+    // $aluno->insert();
+    // echo $aluno;
+
+    //Editar no Banco
+
+     $aluno = new Aluno();
+     $aluno ->loadById(20);
+     $aluno->update("Matheus",9);
 
 ?>
